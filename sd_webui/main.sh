@@ -54,7 +54,7 @@ if [[ "$REINSTALL_SD_WEBUI" || ! -f "/tmp/sd_webui.prepared" ]]; then
     
     # fix install issue with pycairo, which is needed by sd-webui-controlnet
     apt-get install -y libcairo2-dev libjpeg-dev libgif-dev
-    pip uninstall -y torch torchvision torchaudio protobuf lxml
+    pip uninstall -y torch torchvision torchaudio protobuf lxml tensorflow
 
     export PYTHONPATH="$PYTHONPATH:$REPO_DIR"
     # must run inside webui dir since env['PYTHONPATH'] = os.path.abspath(".") existing in launch.py

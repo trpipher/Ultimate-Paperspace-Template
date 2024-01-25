@@ -11,6 +11,7 @@ load_dotenv()
 
 model_storage_dir = os.environ['MODEL_DIR']
 hf_token = os.environ.get('HF_TOKEN', None)
+civit_token = os.environ.get('CIVIT_TOKEN', None)
 user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
 
 def is_url(url_str):
@@ -59,9 +60,9 @@ def downlaod_model(model_uri):
         else:
             soup = BeautifulSoup(requests.get(model_uri, headers=headers).text, features="html.parser")
             data = json.loads(soup.find('script', {'id': '__NEXT_DATA__'}).text)
-            model_data = data["props"]["pageProps"]["trpcState"]["json"]["queries"][0]["state"]["data"]
+            model_data = data["props"]["pageProps"]["trpcState"]["json"]["queries"][3]["state"]["data"]
             latest_model = model_data['modelVersions'][0]
-            latest_model_url = f"https://civitai.com/api/download/models/{latest_model['id']}"
+            latest_model_url = f"https://civitai.com/api/download/models/{latest_model['id']}?token={hf_token}"
             print('Downloading model:', model_data['name'])
             
             # Download the description to a markdown file next to the checkpoint
