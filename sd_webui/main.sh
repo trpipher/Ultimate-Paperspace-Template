@@ -63,7 +63,8 @@ if [[ "$REINSTALL_SD_WEBUI" || ! -f "/tmp/sd_webui.prepared" ]]; then
     cd $current_dir
 
     pip install xformers
-    
+    pip uninstall -y torchvision
+    pip install  torchvision
     touch /tmp/sd_webui.prepared
 else
     
