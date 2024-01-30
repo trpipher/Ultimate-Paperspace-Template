@@ -62,7 +62,6 @@ if [[ "$REINSTALL_SD_WEBUI" || ! -f "/tmp/sd_webui.prepared" ]]; then
     python $current_dir/preinstall.py
     cd $current_dir
 
-    pip install xformers
     pip uninstall -y torchvision
     pip install  torchvision
     touch /tmp/sd_webui.prepared
@@ -94,7 +93,7 @@ if [[ -z "$INSTALL_ONLY" ]]; then
   if [[ -n "${SD_WEBUI_GRADIO_AUTH}" ]]; then
     auth="--gradio-auth ${SD_WEBUI_GRADIO_AUTH}"
   fi
-  PYTHONUNBUFFERED=1 service_loop "python webui.py --xformers --port $SD_WEBUI_PORT --subpath sd-webui $auth --controlnet-dir $MODEL_DIR/controlnet/ --enable-insecure-extension-access ${EXTRA_SD_WEBUI_ARGS}" > $LOG_DIR/sd_webui.log 2>&1 &
+  PYTHONUNBUFFERED=1 service_loop "python webui.py --port $SD_WEBUI_PORT --subpath sd-webui $auth --controlnet-dir $MODEL_DIR/controlnet/ --enable-insecure-extension-access ${EXTRA_SD_WEBUI_ARGS}" > $LOG_DIR/sd_webui.log 2>&1 &
   echo $! > /tmp/sd_webui.pid
 fi
 
