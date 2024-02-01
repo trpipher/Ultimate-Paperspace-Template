@@ -236,6 +236,11 @@ server {
 
     # sd_webui
     location ~* ^/sd-webui/(.*)$ {
+        if ($uri ~* ^/sd-webui/sd-webui-comfyui/comfyui/(.*)$) {
+                rewrite ^/sd-webui/sd-webui-comfyui/comfyui/(.*)$ /$1 break;
+                proxy_pass http://localhost:8189;
+                break;
+        }
         
         rewrite ^/sd-webui/(.*) /$1 break;
         proxy_pass http://localhost:7008;
