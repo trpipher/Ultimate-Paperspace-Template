@@ -65,7 +65,7 @@ server {
     
         if ($first_subpath ~* sd-comfy) {
             rewrite ^/sd-comfy/(.*)$ /$1 break;
-            proxy_pass http://localhost:8189;
+            proxy_pass http://localhost:7005;
         }
     
         if ($first_subpath ~* sd-fooocus) {
@@ -193,7 +193,7 @@ server {
     location ~* ^/sd-comfy/(.*)$ {
         
         rewrite ^/sd-comfy/(.*) /$1 break;
-        proxy_pass http://localhost:8189;
+        proxy_pass http://localhost:7005;
         
     }
     
