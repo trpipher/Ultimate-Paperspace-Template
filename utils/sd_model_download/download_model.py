@@ -30,9 +30,10 @@ def downlaod_model(model_uri):
     model_uri = model_uri.strip()
     headers={'User-Agent': user_agent}
     magnet_match = re.search(r'magnet:\?xt=urn:btih:[\-_A-Za-z0-9&=%.]*', model_uri)
-    civitai_match = re.search(r'^https?:\/\/(?:www\.|(?!www))civitai\.com\/models\/\d*\/.*?$', model_uri)
+    civitai_match = re.search(r'^https?:\/\/(?:www\.|(?!www))civitai\.com\/.*models\/\d*\/.*?$', model_uri)
     web_match = is_url(model_uri)
-
+    
+    print(f"Magnet: {magnet_match} Civit: {civitai_match} Web: {web_match}")
     if magnet_match:
         bash_var = magnet_match[0]
         command = f'''aria2c --seed-time=0 --max-overall-upload-limit=1K --bt-max-peers=120 --summary-interval=0 --console-log-level=warn --file-allocation=none "{bash_var}"'''
@@ -58,13 +59,17 @@ def downlaod_model(model_uri):
             print('URL does not match known civitai.com pattern.')
             # clean exit here
         else:
-            soup = BeautifulSoup(requests.get(model_uri, headers=headers).text, features="html.parser")
-            data = json.loads(soup.find('script', {'id': '__NEXT_DATA__'}).text)
-            model_data = data["props"]["pageProps"]["trpcState"]["json"]["queries"][3]["state"]["data"]
-            latest_model = model_data['modelVersions'][0]
-            latest_model_url = f"https://civitai.com/api/download/models/{latest_model['id']}?token={hf_token}"
-            print('Downloading model:', model_data['name'])
-            
+            api_url = re.search(r'^https?:\/\/(?:www\.|(?!www))civitai\.com\/api\/download\/models\/\d*\/', model_uri)
+            if not api_url:
+                soup = BeautifulSoup(requests.get(model_uri, headers=headers).text, features="html.parser")
+                data = json.loads(soup.find('script', {'id': '__NEXT_DATA__'}).text)
+                model_data = data["props"]["pageProps"]["trpcState"]["json"]["queries"][3]["state"]["data"]
+                latest_model = model_data['modelVersions'][0]
+                latest_model_url = f"https://civitai.com/api/download/models/{latest_model['id']}?token={hf_token}"
+                print('Downloading model:', model_data['name'])
+            else:
+                latest_model_url = f"{api_url[0]}?token={hf_token}"
+                print('Downloading model:', api_url[0])
             # Download the description to a markdown file next to the checkpoint
             # desc = markdownify(model_data['description'])
             # req = urllib.request.Request(latest_model_url, data=None, headers={'User-Agent': user_agent})
