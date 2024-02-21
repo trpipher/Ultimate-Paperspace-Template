@@ -92,6 +92,11 @@ server {
             rewrite ^/sd-webui/(.*)$ /$1 break;
             proxy_pass http://localhost:7008;
         }
+
+        if ($first_subpath ~* sd-forge) {
+            rewrite ^/sd-forge/(.*)$ /$1 break;
+            proxy_pass http://localhost:7020;
+        }
     
         if ($first_subpath ~* textgen) {
             rewrite ^/textgen/(.*)$ /$1 break;
@@ -244,6 +249,14 @@ server {
         
         rewrite ^/sd-webui/(.*) /$1 break;
         proxy_pass http://localhost:7008;
+        
+    }
+
+    # sd-forge
+    location ~* ^/sd-forge/(.*)$ {
+        
+        rewrite ^/sd-forge/(.*) /$1 break;
+        proxy_pass http://localhost:7020;
         
     }
     

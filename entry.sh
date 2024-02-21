@@ -45,6 +45,7 @@ if env | grep -q "PAPERSPACE"; then
   echo "alias status='watch -n 1 /$WORKING_DIR/status_check.py'" >> ~/.bashrc
   echo "alias webuistatus='watch -n 0.1 \"tac /tmp/log/sd_webui.log\"'" >> ~/.bashrc
   echo "alias comfystatus='watch -n 0.1 \"tac /tmp/log/sd_comfy.log\"'" >> ~/.bashrc
+  echo "alias forgestatus='watch -n 0.1 \"tac /tmp/log/sd_forge.log\"'" >> ~/.bashrc
   echo "alias runstatus='watch -n 0.1 \"tac /tmp/run.log\"'" >> ~/.bashrc
   # Use Nginx to expose web app in Paperspace
   apt-get install -qq -y nginx > /dev/null
