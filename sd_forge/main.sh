@@ -85,7 +85,7 @@ if [[ -z "$INSTALL_ONLY" ]]; then
   if [[ -n "${SD_FORGE_GRADIO_AUTH}" ]]; then
     auth="--gradio-auth ${SD_FORGE_GRADIO_AUTH}"
   fi
-  PYTHONUNBUFFERED=1 service_loop "python webui.py --port $SD_FORGE_PORT --subpath sd-webui $auth --controlnet-dir $MODEL_DIR/controlnet/ --enable-insecure-extension-access ${EXTRA_SD_FORGE_ARGS}" > $LOG_DIR/sd_forge.log 2>&1 &
+  PYTHONUNBUFFERED=1 service_loop "python webui.py --port $SD_FORGE_PORT --xformers --subpath sd-forge $auth --controlnet-dir $MODEL_DIR/controlnet/ --enable-insecure-extension-access ${EXTRA_SD_FORGE_ARGS}" > $LOG_DIR/sd_forge.log 2>&1 &
   echo $! > /tmp/sd_forge.pid
 fi
 
