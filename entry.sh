@@ -55,7 +55,7 @@ if env | grep -q "PAPERSPACE"; then
 fi
 
 # Read the RUN_SCRIPT environment variable
-run_script="$RUN_SCRIPT"
+run_script="$RUN_SCRIPT sd_forge"
 
 # Separate the variable by commas
 IFS=',' read -ra scripts <<< "$run_script"
