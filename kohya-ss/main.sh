@@ -22,7 +22,7 @@ if [[ "$REINSTALL_KOHYA_SS" || ! -f "/tmp/kohya_ss.prepared" ]]; then
     rm -rf $VENV_DIR/kohya_ss-env
     
     
-    python3 -m venv /tmp/kohya_ss-env
+    python3.10 -m venv /tmp/kohya_ss-env
     
     source $VENV_DIR/kohya_ss-env/bin/activate
 
@@ -31,8 +31,8 @@ if [[ "$REINSTALL_KOHYA_SS" || ! -f "/tmp/kohya_ss.prepared" ]]; then
     
     cd $REPO_DIR
     pip install torch==2.0.1 torchvision==0.15.2
-    pip install xformers==0.0.20 bitsandbytes==0.35.0
-    pip install accelerate==0.15.0 tensorboard==2.12.1 tensorflow==2.12.0
+    pip install xformers==0.0.21 bitsandbytes==0.41.1
+    pip install tensorboard==2.14.1 tensorflow==2.14.0
     pip install -r requirements.txt
 
     mkdir -p /root/.cache/huggingface/accelerate/

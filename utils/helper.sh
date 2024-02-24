@@ -128,6 +128,18 @@ prepare_link(){
   fi
 }
 
+readlog(){
+  if [ "$1" = "run" ]; then
+    # Code to run if the first argument is equal to "run"
+    watch -n 0.1 \"tac /tmp/log/run.log\"
+    # Additional commands or code here
+  else
+    # Code to run if the first argument is not equal to "run"
+    watch -n 0.1 \"tac /tmp/log/$1.log\"
+    # Additional commands or code here
+  fi
+}
+
 download_from_hf() {
   model_hub="$1"
   model_name="$2"
